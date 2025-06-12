@@ -16,6 +16,8 @@ namespace General
                 throw new ArgumentNullException("Factory method can not be null!");
             }
             _factory = factory;
+            _free = new();
+            _inUse = new();
         }
 
         public T Get()

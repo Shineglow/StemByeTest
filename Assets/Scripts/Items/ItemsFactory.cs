@@ -1,40 +1,26 @@
-using System;
 using General;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Items
 {
-    public class ItemsFactory
-    {
-        private ObjectsPool<ItemViewAbstract> _itemsPool;
-        private ItemViewAbstract[] _prefabs;
+	public class ItemsFactory
+	{
+		private ObjectsPool<ItemViewAbstract> _objectsPool;
 
-        public ItemsFactory()
-        {
-            _prefabs = Resources.LoadAll<ItemViewAbstract>(ProjectPaths.ITEMS_PREFABS_FOLDER);
-            _itemsPool = new ObjectsPool<ItemViewAbstract>(GetPrefab);
-            if (_prefabs.Length == 0)
-            {
-                throw new Exception($"Items prefabs folder \"Resources\\{ProjectPaths.ITEMS_PREFABS_FOLDER}\" is empty");
-            }
-        }
+		public ItemsFactory(ItemViewAbstract prefab)
+		{
+			_objectsPool = new ObjectsPool<ItemViewAbstract>(() => Object.Instantiate(prefab));
+		}
 
-        private ItemViewAbstract GetPrefab()
-        {
-            var result = _prefabs[Random.Range(0, _prefabs.Length)];
-            return result;
-        }
-        
-        ItemViewAbstract GetRandom()
-        {
-            var result = _itemsPool.Get();
-            return result;
-        }
+		public ItemViewAbstract Get()
+		{
+			var result = _objectsPool.Get();
+			return result;
+		}
 
-        void Return(ItemViewAbstract item)
-        {
-            _itemsPool.Free(item);
-        }
-    }
+		public void Free(ItemViewAbstract item)
+		{
+			_objectsPool.Free(item);
+		}
+	}
 }

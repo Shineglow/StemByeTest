@@ -1,26 +1,28 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
-public abstract class ItemViewAbstract : MonoBehaviour
+namespace Items
 {
-    [SerializeField] private Image background;
-    [SerializeField] private Image foreground;
+    public abstract class ItemViewAbstract : MonoBehaviour
+    {
+        [SerializeField] private SpriteRenderer background;
+        [SerializeField] private SpriteRenderer foreground;
     
-    public abstract event Action OnPointerDownEvent;
+        public abstract event Action<ItemViewAbstract> OnPointerDownEvent;
     
-    public void SetBackground(Sprite sprite)
-    {
-        background.sprite = sprite;
-    }
+        public void SetBackground(Sprite sprite)
+        {
+            background.sprite = sprite;
+        }
 
-    public void SetForeground(Sprite sprite)
-    {
-        foreground.sprite = sprite;
-    }
+        public void SetForeground(Sprite sprite)
+        {
+            foreground.sprite = sprite;
+        }
 
-    public void SetColor(Color color)
-    {
-        background.color = color;
+        public void SetMaterial(Material material)
+        {
+            background.material = material;
+        }
     }
 }

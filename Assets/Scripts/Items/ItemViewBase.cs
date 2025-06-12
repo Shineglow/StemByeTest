@@ -1,15 +1,15 @@
 using System;
-using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ItemViewBase : ItemViewAbstract, IPointerDownHandler
+namespace Items
 {
-    public override event Action OnPointerDownEvent;
-    
-    public void OnPointerDown(PointerEventData eventData)
+    public class ItemViewBase : ItemViewAbstract, IPointerDownHandler
     {
-        OnPointerDownEvent?.Invoke();
-    }
-
+        public override event Action<ItemViewAbstract> OnPointerDownEvent;
     
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            OnPointerDownEvent?.Invoke(this);
+        }
+    }
 }
